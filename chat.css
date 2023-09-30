@@ -1,0 +1,140 @@
+#chat-block{
+  display:none;
+  position: sticky;
+  top:10px;
+  height:auto;
+  max-height:100vh;
+  overflow-y: auto;
+  overflow: hiden;
+  width: 100%;
+  background: #428bcab0;
+  padding: 10px;
+  border-radius: 7px;
+  z-index:999;
+}
+.chat-block-data{
+  position:relative;
+  background: #387fbd66;
+  border-radius: 7px;
+  overflow-x: hiden;
+  margin: 0 auto;
+  color: white;
+  text-align: left;
+  font-size: initial;
+  padding: 5px;
+}
+.chat-block-list{
+  padding:25 5 25 5px; 
+}
+.chat-viewport{
+  position:relative;
+  background: #ffffffd9;
+  border-radius: 7px;
+  overflow-x: hiden;
+  overflow-y: auto;
+  height: 45vh;
+  width:100%;
+  margin: 0 auto;
+  color: black;
+  text-align: left;
+  font-size: initial;
+  margin-top: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  padding-top: 5px;
+  padding-bottom: 50px;
+}
+.chat-message-box{
+  position:relative;
+  border-radius: 7px;
+  overflow-x: hiden;
+  overflow-y: hiden;
+  height: auto;
+  margin: 0 auto;
+  color: white;
+  text-align: left;
+  font-size: initial;
+  margin-top: 5px;
+}
+.chat-close{
+  position:absolute; 
+  right: 5px; 
+  top: 3px;
+  font-size: 16pt;
+  cursor:pointer;
+}
+.chat-close:hover{
+  font-size: x-large;
+}
+.chat-b-buttons{
+  display:block; 
+  height:0px; 
+  width:100%; 
+  position:relative; 
+  bottom:0px; 
+  padding-left:5px;
+}
+#options-chat{
+  position:absolute;
+  bottom:5px;
+}
+#send-to-chat{
+  position:absolute;
+  right: 1px;
+  bottom:-45px;
+  z-index:1000 !important;
+}
+#winInfo{
+    display: block;
+    position: absolute;
+    top: 23%;
+    left: 20%;
+    height: auto;
+    max-height: 135px;
+    width: 60%;
+    overflow-y: auto;
+    overflow-x: hiden;
+    background: white;
+    padding: 5px;
+    border-radius: 15px;
+    border-color: #7dafda;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-right: 8px solid transparent;
+    z-index: 1001;
+}
+.chat-block-info{
+  display: block;
+  height: auto;
+  width: 100%;
+  position: relative;
+  border-radius: 7px;
+  text-align: left;
+  font-size: initial;
+  padding-top: 10px;
+}
+.b10{
+margin-bottom: 10px !important;
+}
+.close-data-block{
+    position: absolute !important;
+    top: 23.7% !important;
+    right: 20.5%;
+    height: auto;
+    font-size: 17pt;
+    cursor: pointer;
+    background-color:white;
+    border-radius: 20px;
+    z-index: 1002 !important;
+}
+.close-data-block:hover{
+  font-size: x-large;
+}
+.win-chat-info{
+  float:right; 
+  margin-top:-5px; 
+  padding-right:20px;
+}
+#cleaner{
+display:none;
+}

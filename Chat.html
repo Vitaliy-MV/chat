@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Chat</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/chat/chat.css">
+<link rel="stylesheet" href="/chat/bootstrap/bootstrap.css">
+<script src="/google/ajax/jquery.min.js"></script>
+<script src="/chat/bootstrap/bootstrap.js"></script>
+<script src="/ckeditor/ckeditor.js"></script>
+<script src="/chat/chat.js"></script>
+</head>
+</head>
+<body>
+<a id="open-chat" class="btn btn-default btn-xs" style="width:120px; margin-top:5px;" onclick="openChat()">
+<i class="glyphicon glyphicon-leaf"> Открыть чат</i></a>
+<div id="chat-block">
+<div class="chat-block-data">
+	<div class="chat-close"><span class="glyphicon glyphicon-remove-circle"></span></div>
+	<div class="row">
+		<div class="col-sm-6" style="max-width:350px;">
+		<span id="invitations" class="btn btn-primary">Новые запросы <span class="badge">2</span></span>
+		<span id="unreads" class="btn btn-primary">Непрочитанные <span class="badge">2</span></span>
+		</div>
+		<div class="col-sm-4 chat-block-list">
+		<select class="form-control" id="USERS">
+		<option class="dropdown-header">Список чатов</option>
+		<option value="id1">1</option>
+		<option value="id2">2</option>
+		<option value="ChatID">User Name</option>
+		<option value="id4">4</option>
+		</select>
+		</div>	
+	</div>
+</div>
+<div class="chat-viewport"></div>
+<div class="chat-b-buttons">
+<span id="options-chat">
+	<span class="btn btn-default ru" onclick="translateCh('ru')" disabled>ru</span>
+	<span class="btn btn-default en" onclick="translateCh('en')" disabled>en</span>
+	<span class="btn btn-default he" onclick="translateCh('he')" disabled>he</span>
+	<span class="btn btn-default glyphicon glyphicon-trash" onclick="cleanChat()" disabled> </span>
+	<span class="btn btn-default glyphicon glyphicon-remove" onclick="deleteChat()" disabled> </span>
+</span>
+<span id="send-to-chat"><span class="btn btn-default btn-lg glyphicon glyphicon-send" disabled> </span></span>
+</div>
+	<div class="chat-message-box"></div>
+	<div id="cleaner"></div>
+</div>
+</body>
+</html>
