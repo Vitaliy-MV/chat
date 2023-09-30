@@ -12,12 +12,12 @@ case 'he': accept="מסכים"; reject="ביטול";
 }
 Chat = {
   iOwner : false,		// I'm owner this page (URL);
-  status : 'invited', 		// relative to URL (by Principal), where was click & relative to chat load ("deleted", "invited", "created", "blocked");
+  status : 'invited', 		// relative to URL (by Principal), where was click & relative to chat load ("deleted", "invited", "created");
   inviterReq : 101, 		// requests for open chat to This (Principal) user;
   invitedReq : 100, 		// requests for open chat to owner this page (URL);
   idOwner : '123',		// ID owner this page (URL);
   nameOwner : 'unamed',		// name owner this page (URL);
-  chatBody : 'Some chat...',	// load by "statusChat" history; (last 30 messages);
+  chatBody : 'Some chat...',	// load by "status" history; (last 30 messages);
   listOption : 'html',		// html block <select> for This (Principal) user;
 //listUnread : 'html',		// html block "Unread" for This (Principal) user;
 //listInvites : 'html',		// html block "invites" for This (Principal) user;
@@ -54,7 +54,7 @@ const check = $('#USERS option[value="'+Chat.idOwner+'"]').val();
 if (!Chat.iOwner && !check){
 let message;
  if (Chat.invitedReq < 101){
-	message = '<div id="info-panel" class="panel panel-info b10"><div class="panel-heading">'+inviteQ+'<span style="float:right;"><span class="btn btn-default btn-xs" onclick="inviteToChat(\''+lang+'\', '+Chat.idOwner+')">'+invite+'</span></span></div></div>';
+	message = '<div id="info-panel" class="panel panel-info b10"><div class="panel-heading">'+inviteQ+'<span style="float:right;"><span class="btn btn-default btn-xs" onclick="inviteToChat()">'+invite+'</span></span></div></div>';
  }else{
 	message = '<div id="info-panel" class="panel panel-info b10"><div class="panel-heading">'+tooManyR+'</div></div>';
  }
@@ -129,7 +129,7 @@ document.addEventListener('click', function (event){
   if(event.target.closest('#send-to-chat')){
   const button = $(div).find('.glyphicon-send').attr('disabled');
   if (button!='disabled'){
-    var message = CKEDITOR.instances.chatBox.getData();
+    let message = CKEDITOR.instances.chatBox.getData();
     CKEDITOR.instances.chatBox.setData('');
     $(div).find('.chat-viewport').append(message);
     $(div).find('.chat-viewport').animate({scrollTop: $('html, body').get(0).scrollHeight},500);
@@ -154,17 +154,16 @@ var dataS = Chat.listInvites;
 $(div).append('<div class="glyphicon glyphicon-remove-circle close-data-block" onclick="closeInfoBlock()"></div><div id="winInfo">'+rejectAll+'<span class="win-chat-info">'+windowName+'</span><div class="chat-block-info">'+dataS+'</div></div>');
 }
 
-function inviteToChat(lang, id){
-var name = 'Name owner page';
-$('#USERS').append('<option value="'+id+'">'+name+'</option>');
+function inviteToChat(){
+$('#USERS').append('<option value="'+Chat.idOwner+'">'+Chat.nameOwner+'</option>');
 var message;
-switch (lang){
+switch (langChat){
 case 'ru' : message = '<i>приглашение в ожидании...</i>'; break;
 case 'en' : message = '<i>invitation panding...</i>'; break;
 case 'he' : message = '...הזמנה ממתינה';
 }
-$('#USERS').val(id);
-$('#chat-block').find('.chat-viewport').append(message);
+$('#USERS').val(Chat.idOwner);
+$('#chat-block').find('.chat-viewport').empty().append(message);
 $('#options-chat .glyphicon-remove').attr('disabled', false);
 closeInfoBlock();
 // Request on server: set invite to invited by page URL from inviter by Principal, 
@@ -173,7 +172,6 @@ closeInfoBlock();
 }
 
 function acceptChat(reqUID, name){
-$('#USERS').val(0);
 var div = $('#chat-block');
 const idDiv='#'+reqUID;
 const userName = name;
@@ -254,16 +252,12 @@ var div = $('#chat-block');
     history = message;
     lockChatButtons();
   }
-  else if (statusChat=='blocked'){
-    history = chat;
-    lockChatButtons();
-  }
   else if (statusChat=='deleted'){
   let deleted;
   switch (lang){
     case 'ru' : deleted='Чат удалён собеседником.'; break;
-    case 'en' : deleted='Chat partner deleted the chat.'; break;
-    case 'he' : deleted='הציאט נמחק הצד השני';
+    case 'en' : deleted='Chat partner deleted this chat.'; break;
+    case 'he' : deleted='הציאט נמחק צד שני';
     }
     history = deleted;
     lockChatButtons();
@@ -313,7 +307,6 @@ $('#options-chat .en').attr('disabled', false);
 $('#options-chat .he').attr('disabled', false);
 $('#send-to-chat .glyphicon-send').attr('disabled', false);
 $('#options-chat .glyphicon-trash').attr('disabled', false);
-$('#options-chat .glyphicon-lock').attr('disabled', false);
 $('#options-chat .glyphicon-remove').attr('disabled', false);
 }
 function lockChatButtons(){
@@ -322,7 +315,6 @@ $('#options-chat .en').attr('disabled', true);
 $('#options-chat .he').attr('disabled', true);
 $('#send-to-chat .glyphicon-send').attr('disabled', true);
 $('#options-chat .glyphicon-trash').attr('disabled', true);
-$('#options-chat .glyphicon-lock').attr('disabled', true);
 $('#options-chat .glyphicon-remove').attr('disabled', false);
 }
 
@@ -351,7 +343,7 @@ var div = $('#chat-block');
 switch (langChat){
 case 'ru' : message = 'Удалить этот чат и'; m='из вашего списка?'; break;
 case 'en' : message = 'Delete this chat'; m="from your list?"; break;
-case 'he' : message = 'מחק את הציאט הזה ו'; m="מרשימה שלך?";
+case 'he' : message = 'מחק את ציאט הזה ו'; m="מרשימה שלך?";
 }
 const id = $('#USERS').val();
 const name = $('#USERS option:selected').text();
@@ -364,6 +356,7 @@ const UID = $('#USERS').val();
 $('#USERS option[value='+id+']').remove();
 $(div).find('.chat-viewport').empty();
 $('#USERS option')[0].selected=true;
+lockChatButtons();
 $('#options-chat .glyphicon-remove').attr('disabled', true);
  }
 }
