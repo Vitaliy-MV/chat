@@ -4,7 +4,7 @@ window.onload = function (){
 // exactly who press on the button. Difference just in window "invite" and "load chat by <option>",
 // if this users familiar. So, here first request on server: get Chat for Principal by this URL
 // ............................................................................................  
-langChat = 'ru';		// languege this (Principal) user;
+langChat = 'ru';		// language this (Principal) user;
 switch (langChat){
 case 'ru': accept="принять"; reject="отклонить"; break;
 case 'en': accept="accept"; reject="cancel"; break;
