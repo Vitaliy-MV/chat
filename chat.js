@@ -18,7 +18,6 @@ Chat = {
   idOwner : '123',		// ID owner this page (URL);
   nameOwner : 'unamed',		// name owner this page (URL);
   chatBody : 'Some chat...',	// load by "status" history; (last 30 messages);
-  listOption : 'html',		// html block <select> for This (Principal) user;
 //listUnread : 'html',		// html block "Unread" for This (Principal) user;
 //listInvites : 'html',		// html block "invites" for This (Principal) user;
   listInvites : '<div id="UID1" class="panel panel-info b10"><div class="panel-heading"><a href="#">User Name 1</a><span style="float:right;"><span class="btn btn-default btn-xs" onclick="acceptChat(\'UID1\', \'User Name 1\')">'+accept+'</span><span class="btn btn-default btn-xs" onclick="rejectChat(\'UID1\')">'+reject+'</span></span></div></div><div id="UID2" class="panel panel-info b10"><div class="panel-heading"><a href="#">User Name 2</a><span style="float:right;"><span class="btn btn-default btn-xs" onclick="acceptChat(\'UID2\', \'User Name 2\')">'+accept+'</span><span class="btn btn-default btn-xs" onclick="rejectChat(\'UID2\')">'+reject+'</span></span></div></div>',
@@ -26,8 +25,6 @@ Chat = {
  };
 }
 function openChat(){
-// === Set window "Chat" =>
-// ........................
 var div = $('#chat-block');
 $(div).css('display', 'block');
 $('#open-chat').css('display', 'none');
@@ -39,8 +36,6 @@ CKEDITOR.config.height = 70;
 CKEDITOR.replace('chatBox');
 const lang = langChat;
 var statusChat = Chat.status;
-//$(div).find('#USERS').empty().append(Chat.listOption);
-
 var invite, inviteQ, tooManyR;
 switch(lang){
 case 'ru' : invite='пригласить'; inviteQ='Пригласить <b>'+Chat.nameOwner+'</b> в чат?'; tooManyR='У <b>'+Chat.nameOwner+'</b> больше 101 не принятых приглашений. Новые не принимаются.'; break;
@@ -172,6 +167,7 @@ closeInfoBlock();
 }
 
 function acceptChat(reqUID, name){
+$('#USERS option')[0].selected=true;
 var div = $('#chat-block');
 const idDiv='#'+reqUID;
 const userName = name;
@@ -213,13 +209,13 @@ if (count==0){
   }
 else{
   $(div).find('#invitations').find('.badge').text(count);
+  }
   $(div).find('#'+reqUID).remove();
   $(div).find('#cleaner').append(Chat.listInvites).find('#'+reqUID).remove();
   Chat.listInvites = $(div).find('#cleaner').html();
   $('#cleaner').empty();
 // Request on server: reject ID=reqUID by Principal; =>
 // .....................................................
-  }
 }
 
 function rejectAll(){
@@ -261,12 +257,11 @@ var div = $('#chat-block');
     }
     history = deleted;
     lockChatButtons();
-    $('#options-chat .glyphicon-remove').attr('disabled', true);
     $('#USERS option:selected').remove();
   }
   else{
     history = chat;
-    $('#send-to-chat .glyphicon-send').attr('disabled', false);
+    unlockChatButtons();
   }
 $(div).find('.chat-viewport').empty().html(history);
 }
@@ -345,20 +340,19 @@ case 'ru' : message = 'Удалить этот чат и'; m='из вашего 
 case 'en' : message = 'Delete this chat'; m="from your list?"; break;
 case 'he' : message = 'מחק את ציאט הזה ו'; m="מרשימה שלך?";
 }
-const id = $('#USERS').val();
+const UID = $('#USERS').val();
 const name = $('#USERS option:selected').text();
 message = message+' '+name+' '+m;
 let del = confirm(message);
     if (del){
-const UID = $('#USERS').val();
-// Request on server: Delete chat; Principal ID + UID; =>
-// ......................................................
-$('#USERS option[value='+id+']').remove();
+$('#USERS option[value='+UID+']').remove();
 $(div).find('.chat-viewport').empty();
 $('#USERS option')[0].selected=true;
 lockChatButtons();
 $('#options-chat .glyphicon-remove').attr('disabled', true);
  }
+// Request on server: Delete chat; Principal ID + UID; =>
+// ......................................................
 }
 
 function translateCh(lang){
