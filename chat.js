@@ -62,8 +62,8 @@ setChatByStatus(lang, statusChat, Chat.chatBody);
 var selected, id;
 var listUnread = Chat.listUnread;
 const menu = $('#USERS option')[0].text;
-$('#USERS').change(function(e) {
-selected = $('#USERS option:selected').text();
+$('#USERS').change(function() {
+selected = $(this).text();
 id = $(this).val();
   if(selected!=menu){
   // Request on server: get statusChat, chatBody
@@ -258,6 +258,7 @@ var div = $('#chat-block');
     history = deleted;
     lockChatButtons();
     $('#USERS option:selected').remove();
+    $('#USERS option')[0].selected=true;
   }
   else{
     history = chat;
