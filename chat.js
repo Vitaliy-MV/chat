@@ -97,9 +97,10 @@ $('#options-chat .glyphicon-remove').attr('disabled', true);
   }
 });
 // Close window chat
-document.addEventListener('click', function (event){
+$(div).click(function (event){
   if(event.target.closest('.chat-close')){
   CKEDITOR.instances.chatBox.destroy();
+  $(div).unbind('click');
   closeChat();
   }
 // Window "Invitations"
@@ -118,10 +119,8 @@ if (count!=0 && $(winOpen).hasClass("close-data-block")==false){
   unread(Chat.listUnread);
    }
 }
-});
 // Button send
-document.addEventListener('click', function (event){
-  if(event.target.closest('#send-to-chat')){
+if(event.target.closest('#send-to-chat')){
   const button = $(div).find('.glyphicon-send').attr('disabled');
   if (button!='disabled'){
     let message = CKEDITOR.instances.chatBox.getData();
