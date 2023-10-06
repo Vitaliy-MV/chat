@@ -100,7 +100,6 @@ $('#options-chat .glyphicon-remove').attr('disabled', true);
 $(div).click(function (event){
   if(event.target.closest('.chat-close')){
   CKEDITOR.instances.chatBox.destroy();
-  $(div).unbind('click');
   closeChat();
   }
 // Window "Invitations"
